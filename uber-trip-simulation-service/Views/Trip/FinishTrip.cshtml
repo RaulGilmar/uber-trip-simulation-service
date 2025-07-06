@@ -1,0 +1,17 @@
+﻿@model Trip
+
+@if (TempData["Alert"] != null)
+{
+    <div class="alert alert-success">@TempData["Alert"]</div>
+}
+
+<h3>¡Viaje finalizado!</h3>
+<p>Conductor: @Model.Driver.FirstName @Model.Driver.LastName</p>
+<p>Destino: @Model.Destination</p>
+
+<form asp-action="RateTrip" method="post">
+    <input type="hidden" name="tripId" value="@Model.Id" />
+    <label>Califique al chofer (1-10):</label>
+    <input type="number" name="rating" min="1" max="10" class="form-control" required />
+    <button type="submit" class="btn btn-primary">Enviar calificación</button>
+</form>

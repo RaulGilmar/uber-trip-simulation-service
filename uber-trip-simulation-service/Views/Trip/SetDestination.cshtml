@@ -1,0 +1,13 @@
+﻿@model int
+
+@if (TempData["Alert"] != null)
+{
+    <div class="alert alert-info">@TempData["Alert"]</div>
+}
+
+<h3>Ingrese su destino</h3>
+<form asp-action="SetDestination" method="post">
+    <input type="hidden" name="tripId" value="@Model" />
+    <input type="text" name="destination" class="form-control" required />
+    <button type="submit" class="btn btn-success">Solicitar viaje</button>
+</form>

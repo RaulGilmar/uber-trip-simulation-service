@@ -1,0 +1,12 @@
+﻿@model Customer
+
+@if (TempData["Alert"] != null)
+{
+    <div class="alert alert-info">@TempData["Alert"]</div>
+}
+
+<h2>Bienvenido, @Model.FirstName</h2>
+<form asp-action="StartTrip" method="post">
+    <input type="hidden" name="customerId" value="@Model.Id" />
+    <button type="submit" class="btn btn-primary">Iniciar viaje</button>
+</form>
