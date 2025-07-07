@@ -40,15 +40,6 @@ Esta es una aplicación de ejemplo en **ASP.NET Core MVC** que simula el flujo d
   - Calificación
 - La aplicación simula el proceso completo, mostrando alertas en cada etapa.
 
----
-
-## Pruebas
-
-Para ejecutar los tests:
-
-```bash
-dotnet test
-```
 
 ---
 
@@ -95,11 +86,3 @@ This is a sample **ASP.NET Core MVC** application that simulates a ride request 
 - The app simulates the full process, showing alerts at each stage.
 
 ---
-
-## Tests
-
-To run the tests:
-
-```bash
-dotnet test
-```
