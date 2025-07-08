@@ -27,7 +27,7 @@ Esta es una aplicación de ejemplo en **ASP.NET Core MVC** que simula el flujo d
    dotnet run
    ```
 
-3. Abre tu navegador en `http://localhost:5000` (o el puerto que indique la consola).
+3. Abre tu navegador en `http://localhost:5163/Trip/Welcome/` o `https://localhost:7024/Trip/Welcome/`.
 
 ---
 
@@ -35,8 +35,10 @@ Esta es una aplicación de ejemplo en **ASP.NET Core MVC** que simula el flujo d
 
 - Al iniciar, selecciona un cliente y haz clic en **"Iniciar viaje"**.
 - Ingresa el destino y sigue los pasos del flujo:
+  - Solicitud de viaje
   - Asignación de chofer  
-  - Viaje en curso  
+  - Viaje en curso
+  - Finalización del recorrido
   - Calificación
 - La aplicación simula el proceso completo, mostrando alertas en cada etapa.
 
@@ -72,7 +74,7 @@ This is a sample **ASP.NET Core MVC** application that simulates a ride request 
    dotnet run
    ```
 
-3. Open your browser at `http://localhost:5000` (or the port shown in the console).
+3. Open your browser at `http://localhost:5163/Trip/Welcome/` or `https://localhost:7024/Trip/Welcome/`.
 
 ---
 
@@ -80,8 +82,10 @@ This is a sample **ASP.NET Core MVC** application that simulates a ride request 
 
 - On start, select a customer and click **"Start trip"**.
 - Enter the destination and follow the flow:
+  - Trip request
   - Driver assignment
   - Trip in progress
+  - Route finalization
   - Rating
 - The app simulates the full process, showing alerts at each stage.
 
