@@ -24,7 +24,8 @@ Esta es una aplicación de ejemplo en **ASP.NET Core MVC** que simula el flujo d
 
    ```bash
    dotnet restore
-   dotnet run
+   dotnet run --project .\uber-trip-simulation-service\
+
    ```
 
 3. Abre tu navegador en `http://localhost:5163/Trip/Welcome/` o `https://localhost:7024/Trip/Welcome/`.
@@ -71,7 +72,8 @@ This is a sample **ASP.NET Core MVC** application that simulates a ride request 
 
    ```bash
    dotnet restore
-   dotnet run
+   dotnet run --project .\uber-trip-simulation-service\
+
    ```
 
 3. Open your browser at `http://localhost:5163/Trip/Welcome/` or `https://localhost:7024/Trip/Welcome/`.
