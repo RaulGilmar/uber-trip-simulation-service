@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using uber_trip_simulation_service.Models;
 
 namespace uber_trip_simulation_service.Controllers
@@ -6,10 +7,12 @@ namespace uber_trip_simulation_service.Controllers
     public class TripController : Controller
     {
         private readonly AppRepository _repo;
+        private readonly ILogger<TripController> _logger;
 
-        public TripController(AppRepository repo)
+        public TripController(AppRepository repo, ILogger<TripController> logger)
         {
             _repo = repo;
+            _logger = logger;
         }
 
         public IActionResult Welcome(int customerId = 1)
@@ -31,9 +34,6 @@ namespace uber_trip_simulation_service.Controllers
             };
             _repo.Trips.Add(trip);
 
-            // Alert: viaje solicitado
-            TempData["Alert"] = $"Viaje solicitado por {customer.FirstName} desde {trip.Origin}";
-
             // Espera input destino (redirige a vista para ingresar destino)
             return RedirectToAction("SetDestination", new { tripId = trip.Id });
         }
@@ -50,11 +50,19 @@ namespace uber_trip_simulation_service.Controllers
             var trip = _repo.Trips.First(t => t.Id == tripId);
             trip.Destination = destination;
 
+            var customer = trip.Customer;
+
+            // Alert: viaje solicitado
+            TempData["Alert"] = $"Viaje solicitado por {customer.FirstName} desde {trip.Origin}";
+            _logger.LogInformation($"[SetDestination]\n      Viaje solicitado por {customer.FirstName} desde {trip.Origin} hasta {trip.Destination}.\n      Trip {trip.Status}\n      ----------");
+
             // Buscar chofer disponible
             var driver = _repo.Drivers.FirstOrDefault(d => d.IsAvailable);
             if (driver == null)
             {
                 TempData["Alert"] = "No hay choferes disponibles.";
+                _logger.LogInformation($"[SetDestination]\n      No hay choferes disponibles.\n      ----------");
+
                 return RedirectToAction("Welcome", new { customerId = trip.Customer.Id });
             }
             trip.Driver = driver;
@@ -62,6 +70,7 @@ namespace uber_trip_simulation_service.Controllers
             driver.IsAvailable = false;
 
             TempData["Alert"] = $"Viaje confirmado con {driver.FirstName} {driver.LastName}";
+            _logger.LogInformation($"[SetDestination]\n      Viaje confirmado con {driver.FirstName} {driver.LastName} {driver.CarBrand} {driver.CarModel} {driver.LicensePlate}\n      Trip {trip.Status}\n      ----------");
 
             // Simular llegada del chofer (do-while con for)
             return RedirectToAction("DriverArriving", new { tripId = trip.Id });
@@ -70,30 +79,35 @@ namespace uber_trip_simulation_service.Controllers
         public async Task<IActionResult> DriverArriving(int tripId)
         {
             var trip = _repo.Trips.First(t => t.Id == tripId);
-            int distance = 10;
+            int distance = 3;
+            trip.Status = TripStatus.InProgress;
+
             do
             {
                 for (int i = distance; i >= 0; i--)
                 {
                     TempData["Alert"] = $"El chofer está a {i} cuadras";
+                    _logger.LogInformation($"[DriverArriving]\n      El chofer está a {i} cuadras.\n      Trip {trip.Status}\n      ----------");
                     await Task.Delay(1000);
                 }
                 distance = 0;
             } while (distance != 0);
 
-            trip.Status = TripStatus.InProgress;
+            _logger.LogInformation($"[DriverArriving]\n      Cliente a bordo del Uber, viaje iniciado.\n      Trip {trip.Status}\n      --------");
+
             return RedirectToAction("TripInProgress", new { tripId = trip.Id });
         }
 
         public async Task<IActionResult> TripInProgress(int tripId)
         {
             var trip = _repo.Trips.First(t => t.Id == tripId);
-            int distance = 10;
+            int distance = 5;
             do
             {
                 for (int i = distance; i >= 0; i--)
                 {
                     TempData["Alert"] = $"Faltan {i} cuadras para llegar a destino";
+                    _logger.LogInformation($"[TripInProgress]\n      Faltan {i} cuadras para llegar a destino\n      Trip {trip.Status}\n      ----------");
                     await Task.Delay(1000);
                 }
                 distance = 0;
@@ -108,6 +122,7 @@ namespace uber_trip_simulation_service.Controllers
         {
             var trip = _repo.Trips.First(t => t.Id == tripId);
             TempData["Alert"] = "Viaje finalizado";
+            _logger.LogInformation($"[FinishTrip]\n      Viaje finalizado.\n      Trip {trip.Status}\n      ----------");
             return View(trip);
         }
 
@@ -118,6 +133,7 @@ namespace uber_trip_simulation_service.Controllers
             trip.Driver.Rating = rating;
             trip.Driver.IsAvailable = true;
             TempData["Alert"] = $"Calificación del chofer: {rating}";
+            _logger.LogInformation($"[RateTrip]\n      Calificación del chofer: {rating}\n      Trip {trip.Status}\n      ----------");
             return RedirectToAction("Welcome", new { customerId = trip.Customer.Id });
         }
     }
