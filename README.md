@@ -41,7 +41,7 @@ Esta es una aplicación de ejemplo en **ASP.NET Core MVC** que simula el flujo d
   - Viaje en curso
   - Finalización del recorrido
   - Calificación
-- La aplicación simula el proceso completo, mostrando alertas en cada etapa.
+- La aplicación simula el proceso completo, mostrando alertas por consola en cada etapa.
 
 
 ---
@@ -89,6 +89,6 @@ This is a sample **ASP.NET Core MVC** application that simulates a ride request 
   - Trip in progress
   - Route finalization
   - Rating
-- The app simulates the full process, showing alerts at each stage.
+- The app simulates the full process, showing console alerts at each stage.
 
 ---
