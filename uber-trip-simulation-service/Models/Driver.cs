@@ -10,5 +10,6 @@
         public string LicensePlate { get; set; }
         public float Rating { get; set; }
         public bool IsAvailable { get; set; }
+        public int PhoneNumber { get; set; }
     }
 }

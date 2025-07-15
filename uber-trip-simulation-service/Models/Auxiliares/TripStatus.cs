@@ -1,4 +1,4 @@
-﻿namespace uber_trip_simulation_service.Models
+﻿namespace uber_trip_simulation_service.Models.Auxiliares
 {
     public enum TripStatus
     {

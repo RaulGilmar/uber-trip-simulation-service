@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using uber_trip_simulation_service.Models;
+using uber_trip_simulation_service.Models.Auxiliares;
 
 namespace uber_trip_simulation_service.Controllers
 {
