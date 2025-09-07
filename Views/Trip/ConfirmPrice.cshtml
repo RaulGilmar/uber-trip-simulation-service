@@ -1,0 +1,17 @@
+@model uber_trip_simulation_service.Models.Trip
+
+@{
+    ViewData["Title"] = "Confirmar precio del viaje";
+}
+
+<h2>Confirmar precio del viaje</h2>
+
+<p><strong>Origen:</strong> @Model.Origin</p>
+<p><strong>Destino:</strong> @Model.Destination</p>
+<p><strong>Precio:</strong> $@Model.Amount</p>
+
+<form asp-action="ConfirmPrice" method="post">
+    <input type="hidden" name="tripId" value="@Model.Id" />
+    <button type="submit" name="confirmar" value="true" class="btn btn-success">Confirmar</button>
+    <button type="submit" name="confirmar" value="false" class="btn btn-danger">Cancelar</button>
+</form>
